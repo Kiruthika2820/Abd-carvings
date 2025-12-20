@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Edit Product</title>
+</head>
+<body>
+<h1>Edit Product</h1>
+<form method="POST">
+    Name:<br>
+    <input type="text" name="name" value="{{ product.name }}" required><br>
+    Price:<br>
+    <input type="number" name="price" step="0.01" value="{{ product.price }}" required><br>
+    Description:<br>
+    <textarea name="description" required>{{ product.description }}</textarea><br>
+    Image URL:<br>
+    <input type="text" name="image" value="{{ product.image }}"><br><br>
+    <button type="submit">Save Changes</button>
+</form>
+<p><a href="/admin/products">Back to Products</a></p>
+</body>
+</html>

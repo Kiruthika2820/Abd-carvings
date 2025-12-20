@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>{{ product.name }}</title>
+
+<style>
+body{
+  font-family:Arial, sans-serif;
+  background:#f5f5f5;
+  margin:0;
+}
+.container{
+  max-width:900px;
+  margin:30px auto;
+  background:#fff;
+  padding:25px;
+  border-radius:12px;
+  position:relative;
+}
+.product-box{
+  display:flex;
+  gap:30px;
+  flex-wrap:wrap;
+  position:relative;
+}
+.product-box img{
+  width:320px;
+  border-radius:10px;
+  object-fit:cover;
+}
+.price{
+  font-size:22px;
+  font-weight:bold;
+  margin:10px 0;
+}
+.actions{
+  position:absolute;
+  top:20px;
+  right:20px;
+  display:flex;
+  gap:10px;
+}
+.btn{
+  padding:10px 18px;
+  border:none;
+  border-radius:8px;
+  background:#198754;
+  color:#fff;
+  cursor:pointer;
+}
+.btn:hover{opacity:0.9;}
+.wishlist-btn{
+  background:#198754;
+  color:#fff;
+  border:none;
+  padding:10px 14px;
+  border-radius:8px;
+  cursor:pointer;
+  font-size:18px;
+}
+.bottom-actions{
+  margin-top:20px;
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+}
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.6);
+  justify-content:center;
+  align-items:center;
+  z-index:999;
+}
+.modal-box{
+  background:#fff;
+  padding:25px;
+  border-radius:12px;
+  width:90%;
+  max-width:420px;
+}
+.modal-box h3{
+  text-align:center;
+  margin-bottom:15px;
+}
+.modal-box input,
+.modal-box select,
+.modal-box textarea{
+  width:100%;
+  padding:10px;
+  margin-bottom:12px;
+  border-radius:8px;
+  border:1px solid #ccc;
+}
+.modal-box textarea{min-height:100px;}
+.review-actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+.btn-submit{
+  background:#198754;
+  color:#fff;
+  border:none;
+  padding:10px;
+  border-radius:8px;
+}
+.btn-close{
+  background:#ddd;
+  border:none;
+  padding:10px;
+  border-radius:8px;
+}
+.review-actions{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-top: 10px;
+}
+
+/* ALL REVIEWS BUTTON */
+.all-reviews-btn{
+    width: 110px !important;     /* FORCE width */
+    height: 42px;
+    padding: 0 !important;       /* padding remove */
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 10px;
+    background-color: #1b8a4b;
+    color: white;
+    text-align: center;
+    line-height: 42px;           /* vertical center */
+    text-decoration: none;
+    display: inline-block;
+}
+
+/* HEART / WISHLIST BUTTON */
+.wishlist-btn{
+    width: 48px;
+    height: 42px;
+    border-radius: 10px;
+    background-color: #1b8a4b;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    right: 10px;
+}
+
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <div class="product-box">
+
+    <img src="{{ url_for('static', filename=product.image.replace('static/', '')) }}" alt="Product">
+
+    <div>
+      <h1>{{ product.name }}</h1>
+      <div class="price">₹{{ product.price }}</div>
+      <p>{{ product.description }}</p>
+
+      <div class="bottom-actions">
+
+        <!-- ADD TO CART -->
+        <form method="POST" action="{{ url_for('add_to_cart', product_id=product.id) }}" id="addToCartForm">
+          <button type="submit" class="btn">Add to Cart</button>
+        </form>
+
+        <!-- BUY NOW -->
+        <form method="GET" action="{{ url_for('checkout_single', product_id=product.id) }}">
+          <button type="submit" class="btn">Buy Now</button>
+        </form>
+
+        <!-- WRITE REVIEW -->
+        <button class="btn" onclick="openModal('writeReviewModal')">Write Review</button>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="btn" onclick="openModal('allReviewsModal')">All Reviews</button>
+      <button class="wishlist-btn" onclick="addWishlist({{ product.id }})">❤️</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- WRITE REVIEW MODAL -->
+<div class="modal" id="writeReviewModal">
+  <div class="modal-box">
+    <h3>Write Review</h3>
+    <form method="POST" action="{{ url_for('write_review', product_id=product.id) }}">
+      <input type="text" name="name" placeholder="Your Name" required>
+      <select name="rating" required>
+        <option value="">Rating</option>
+        <option value="5">★★★★★</option>
+        <option value="4">★★★★</option>
+        <option value="3">★★★</option>
+        <option value="2">★★</option>
+        <option value="1">★</option>
+      </select>
+      <textarea name="comment" placeholder="Write your review..." required></textarea>
+      <div class="review-actions">
+        <button class="btn-submit" type="submit">Submit</button>
+        <button type="button" class="btn-close" onclick="closeAll()">Close</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ALL REVIEWS MODAL -->
+<div class="modal" id="allReviewsModal">
+  <div class="modal-box">
+    <h3>All Reviews</h3>
+    {% set reviews = load_reviews().get(product.id|string, []) %}
+    {% if reviews %}
+      {% for r in reviews %}
+        <p><b>{{ r.name }}</b> ⭐{{ r.rating }}</p>
+        <p>{{ r.comment }}</p>
+        <hr>
+      {% endfor %}
+    {% else %}
+      <p>No reviews yet</p>
+    {% endif %}
+    <button class="btn" onclick="closeAll()">Close</button>
+  </div>
+</div>
+
+<script>
+function openModal(id){
+  document.getElementById(id).style.display="flex";
+}
+function closeAll(){
+  document.querySelectorAll(".modal").forEach(m=>m.style.display="none");
+}
+
+function addWishlist(pid){
+  fetch("/add_to_wishlist/"+pid,{method:"POST"})
+    .then(r=>r.json())
+    .then(d=>{
+      if(d.status==="ok") alert("Added to wishlist ❤️");
+    });
+}
+
+/* ADD TO CART USING FETCH */
+document.getElementById("addToCartForm").addEventListener("submit", function(e){
+  e.preventDefault();
+  fetch(this.action,{
+    method:"POST",
+    body:new FormData(this)
+  })
+  .then(r=>r.json())
+  .then(d=>{
+    if(d.status==="ok") alert("✅ Product added to cart!");
+    else alert("❌ Failed");
+  });
+});
+
+function addWishlist(productId){
+    fetch(`/add_to_wishlist/${productId}`, {
+        method: "POST"
+    })
+    .then(res => res.json())
+    .then(data => {
+        alert(data.message);
+    })
+    .catch(err => {
+        console.error(err);
+        alert("Error adding to wishlist");
+    });
+}
+</script>
+
+</body>
+</html>

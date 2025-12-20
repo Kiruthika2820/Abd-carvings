@@ -1,0 +1,157 @@
+[
+  {
+        "id": 1,
+        "name": "Customized single lead Miniature Pencil carving ",
+        "price": 299 ,
+        "description": "Tiny, unique, and handcrafted! Customized single-lead pencil carving -perfect as a collectible, gift, or desk décor for art lovers.",
+        "image": "/static/images/f1.jpg"
+    },
+    {
+        "id": 2,
+        "name": "Customized single lead Miniature Pencil carving",
+        "price": 299,
+        "description": "Tiny, unique, and handcrafted! Customized single-lead pencil carving - perfect as a collectible, gift, or desk décor for art lovers.",
+        "image": "/static/images/f2.jpg"
+    },
+    {
+        "id": 3,
+        "name": "Customized single lead Miniature Pencil carving ",
+        "price": 299,
+        "description": "Tiny, unique, and handcrafted! Customized single-lead pencil carving - perfect as a collectible, gift, or desk décor for art lovers.",
+        "image": "/static/images/f15.jpg"
+    },
+    {
+        "id": 4,
+        "name": "Customized single lead Miniature Pencil carving ",
+        "price": 299,
+        "description": "Tiny, unique, and handcrafted! Customized single-lead pencil carving - perfect as a collectible, gift, or desk décor for art lovers.",
+        "image": "/static/images/f16.jpg"
+    },
+    {
+        "id": 5,
+        "name": "Customized single lead Miniature Pencil carving ",
+        "price": 299,
+        "description": "Tiny, unique, and handcrafted! Customized single-lead pencil carving - perfect as a collectible, gift, or desk décor for art lovers.",
+        "image": "/static/images/f17.jpg"
+    },
+    {
+        "id": 6,
+        "name": "Customized single lead Miniature Pencil carving ",
+        "price": 299,
+        "description": "Tiny, unique, and handcrafted! Customized single-lead pencil carving - perfect as a collectible, gift, or desk décor for art lovers.",
+        "image": "/static/images/f18.jpg"
+    },
+    {
+        "id": 7,
+        "name": "Customized single lead Miniature Pencil carving ",
+        "price": 299,
+        "description": "Tiny, unique, and handcrafted! Customized single-lead pencil carving - perfect as a collectible, gift, or desk décor for art lovers.",
+        "image": "/static/images/f19.jpg"
+    },
+    {
+        "id": 8,
+        "name": "Customized single lead Miniature Pencil carving ",
+        "price": 299,
+        "description": "Tiny, unique, and handcrafted! Customized single-lead pencil carving - perfect as a collectible, gift, or desk décor for art lovers.",
+        "image": "/static/images/f20.jpg"
+    },
+    {
+        "id": 9,
+        "name": "Double lead Miniature Pencil carving ",
+        "price": 399,
+        "description": "Tiny art, big charm! Handcrafted double-lead pencil carving - a perfect collectible, gift, or desk décor for art lovers.",
+        "image": "/static/images/f3.jpg"
+    },
+    {
+        "id": 10,
+        "name": "Double lead Miniature Pencil carving ",
+        "price": 399,
+        "description": "Tiny art, big charm! Handcrafted double-lead pencil carving - a perfect collectible, gift, or desk décor for art lovers.",
+        "image": "/static/images/f12.jpg"
+    },
+    {
+        "id": 11,
+        "name": "Double lead Miniature Pencil carving ",
+        "price": 399,
+        "description": "Tiny art, big charm! Handcrafted double-lead pencil carving - a perfect collectible, gift, or desk décor for art lovers.",
+        "image": "/static/images/f13.jpg"
+    },
+    {
+        "id": 12,
+        "name": "Double lead Miniature Pencil carving ",
+        "price": 399,
+        "description": "Tiny art, big charm! Handcrafted double-lead pencil carving - a perfect collectible, gift, or desk décor for art lovers.",
+        "image": "/static/images/f14.jpg"
+    },
+     {
+        "id": 13,
+        "name": "Customized Sunlight keychain gift art ",
+        "price": 199,
+        "description": "Carry a ray of joy everywhere! Customized Sunlight Keychain - a charming, handcrafted gift that adds warmth and happiness to your everyday life.",
+        "image": "/static/images/f5.jpg"
+    },
+     {
+        "id": 14,
+        "name": "Customized Sunlight keychain gift art ",
+        "price": 199,
+        "description": "Carry a ray of joy everywhere! Customized Sunlight Keychain - a charming, handcrafted gift that adds warmth and happiness to your everyday life.",
+        "image": "/static/images/f21.jpg"
+    },
+     {
+        "id": 15,
+        "name": "Customized Sunlight keychain gift art ",
+        "price": 199,
+        "description": "Carry a ray of joy everywhere! Customized Sunlight Keychain - a charming, handcrafted gift that adds warmth and happiness to your everyday life.",
+        "image": "/static/images/f22.jpg"
+    },
+      {
+        "id": 16,
+        "name": "Customized Sunlight keychain gift art ",
+        "price": 199,
+        "description": "Carry a ray of joy everywhere! Customized Sunlight Keychain - a charming, handcrafted gift that adds warmth and happiness to your everyday life.",
+        "image": "/static/images/f23.jpg"
+    },
+      {
+        "id": 17,
+        "name": "Customized Sunlight keychain gift art ",
+        "price": 199,
+        "description": "Carry a ray of joy everywhere! Customized Sunlight Keychain - a charming, handcrafted gift that adds warmth and happiness to your everyday life.",
+        "image": "/static/images/f24.jpg"
+    },
+      {
+        "id": 18,
+        "name": "Customized Sunlight keychain gift art ",
+        "price": 199,
+        "description": "Carry a ray of joy everywhere! Customized Sunlight Keychain - a charming, handcrafted gift that adds warmth and happiness to your everyday life.",
+        "image": "/static/images/f25.jpg"
+    },
+      {
+        "id": 19,
+        "name": "Customized Sunlight art potrait A5 size ",
+        "price": 800,
+        "description": "Bring your memories to life! Customized Sunlight Art Portrait - handcrafted on A4 size, perfect as a personalized gift or wall décor.",
+        "image": "/static/images/f8.jpg"
+    },
+     {
+        "id": 20,
+        "name": "Customized Sunlight art potrait A4 size ",
+        "price": 1500,
+        "description": "Bring your memories to life! Customized Sunlight Art Portrait - handcrafted on A4 size, perfect as a personalized gift or wall décor.",
+        "image": "/static/images/f8.jpg"
+    },
+     {
+        "id": 21,
+        "name": "Customized Sunlight art potrait A3 size ",
+        "price": 2500,
+        "description": "Bring your memories to life! Customized Sunlight Art Portrait - handcrafted on A4 size, perfect as a personalized gift or wall décor.",
+        "image": "/static/images/f8.jpg"
+    },
+     {
+        "id": 22,
+        "name": "Customized Sunlight art potrait A2 size ",
+        "price": 3500,
+        "description": "Bring your memories to life! Customized Sunlight Art Portrait - handcrafted on A4 size, perfect as a personalized gift or wall décor.",
+        "image": "/static/images/f8.jpg"
+    }
+
+]

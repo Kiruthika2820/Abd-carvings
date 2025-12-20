@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>My Cart</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background:#f5f5f5;
+    margin:0;
+}
+.container {
+    max-width:900px;
+    margin:30px auto;
+    background:#fff;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.1);
+}
+h2 { margin-bottom:20px; }
+
+table {
+    width:100%;
+    border-collapse:collapse;
+}
+th, td {
+    padding:12px;
+    border-bottom:1px solid #ddd;
+    text-align:center;
+}
+th {
+    background:#0d6efd;
+    color:#fff;
+}
+.product-img {
+    width:80px;
+    height:80px;
+    object-fit:cover;
+    border-radius:8px;
+}
+.quantity-control {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:6px;
+}
+.quantity-control button {
+    padding:6px 12px;
+    border:none;
+    background:#6c757d;
+    color:white;
+    border-radius:4px;
+    cursor:pointer;
+}
+.quantity-control input {
+    width:55px;
+    text-align:center;
+    font-size:14px;
+}
+.btn-remove {
+    background:#dc3545;
+    color:white;
+    border:none;
+    padding:6px 10px;
+    border-radius:6px;
+    cursor:pointer;
+}
+.cart-actions {
+    display:flex;
+    justify-content:space-between;
+    margin-top:20px;
+    align-items:center;
+}
+.btn-clear {
+    background:#6c757d;
+    color:white;
+    border:none;
+    padding:10px 16px;
+    border-radius:6px;
+    cursor:pointer;
+}
+.btn-checkout {
+    background:#198754;
+    color:white;
+    border:none;
+    padding:12px 20px;
+    border-radius:6px;
+    cursor:pointer;
+    font-size:16px;
+}
+.total {
+    text-align:right;
+    font-size:20px;
+    margin-top:15px;
+    font-weight:bold;
+}
+.empty {
+    text-align:center;
+    font-size:18px;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+<h2>My Cart</h2>
+
+{% if cart_items %}
+<table>
+<thead>
+<tr>
+    <th>Image</th>
+    <th>Product</th>
+    <th>Price</th>
+    <th>Quantity</th>
+    <th>Subtotal</th>
+    <th>Action</th>
+</tr>
+</thead>
+<tbody>
+{% for item in cart_items %}
+<tr data-price="{{ item.price }}" data-id="{{ item.id }}">
+    <td>
+        <a href="/product/{{ item.id }}">
+            <img src="{{ item.image }}" class="product-img">
+        </a>
+    </td>
+    <td>
+        <a href="/product/{{ item.id }}" style="text-decoration:none; color:inherit;">
+            {{ item.name }}
+        </a>
+    </td>
+    <td class="price">₹{{ "%.2f"|format(item.price) }}</td>
+    <td>
+        <div class="quantity-control">
+            <button type="button" class="minus">−</button>
+            <input type="number" value="{{ item.quantity }}" min="1" max="10">
+            <button type="button" class="plus">+</button>
+        </div>
+    </td>
+    <td class="subtotal">₹0.00</td>
+    <td>
+        <a href="/remove_cart/{{ item.id }}">
+            <button class="btn-remove">Remove</button>
+        </a>
+    </td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+
+<p class="total">
+    Total: <span id="cart-total">₹0.00</span>
+</p>
+
+<div class="cart-actions">
+    <a href="/clear_cart">
+        <button class="btn-clear">Clear Cart</button>
+    </a>
+    <a href="/checkout_cart">
+        <button class="btn-checkout">Proceed to Checkout</button>
+    </a>
+</div>
+
+{% else %}
+<p class="empty">Your cart is empty</p>
+{% endif %}
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const MAX = 10;
+    const MIN = 1;
+
+    function updateTotal() {
+        let total = 0;
+        document.querySelectorAll(".subtotal").forEach(s => {
+            total += parseFloat(s.innerText.replace("₹",""));
+        });
+        document.getElementById("cart-total").innerText = "₹" + total.toFixed(2);
+    }
+
+    document.querySelectorAll("tbody tr").forEach(row => {
+        const price = parseFloat(row.dataset.price);
+        const input = row.querySelector("input");
+        const plus  = row.querySelector(".plus");
+        const minus = row.querySelector(".minus");
+        const subtotalCell = row.querySelector(".subtotal");
+
+        function updateSubtotal() {
+            let qty = parseInt(input.value);
+            subtotalCell.innerText = "₹" + (price * qty).toFixed(2);
+            updateTotal();
+        }
+
+        plus.onclick = () => {
+            if(+input.value < MAX) { input.value++; updateSubtotal(); }
+        };
+        minus.onclick = () => {
+            if(+input.value > MIN) { input.value--; updateSubtotal(); }
+        };
+        input.oninput = () => {
+            if(input.value > MAX) input.value = MAX;
+            if(input.value < MIN) input.value = MIN;
+            updateSubtotal();
+        };
+
+        updateSubtotal();
+    });
+
+    updateTotal();
+});
+</script>
+</body>
+</html>

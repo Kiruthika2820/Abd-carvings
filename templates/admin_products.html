@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Admin Products</title>
+<style>
+body { font-family: Arial, sans-serif; background:#f5f5f5; margin:0; padding:0; }
+.container { max-width: 900px; margin: 30px auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+h1 { text-align:center; margin-bottom:20px; }
+.product { display:flex; border-bottom:1px solid #ddd; padding:15px 0; align-items:center; }
+.product img { width:80px; height:80px; object-fit:cover; margin-right:20px; border-radius:6px; }
+.product div { flex:1; }
+.product-actions { margin-top:10px; }
+.product-actions form { display:inline; }
+.product-actions a, .product-actions button { margin-right:10px; text-decoration:none; padding:5px 10px; background:#3498db; color:#fff; border:none; border-radius:4px; cursor:pointer; }
+.product-actions button:hover, .product-actions a:hover { background:#2980b9; }
+</style>
+</head>
+<body>
+<div class="container">
+<h1>All Products</h1>
+<p style="text-align:center;"><a href="{{ url_for('add_product') }}">Add New Product</a></p>
+
+{% for p in products %}
+<div class="product">
+    <img src="{{ p.image }}" alt="{{ p.name }}">
+    <div>
+        <strong>{{ p.name }}</strong><br>
+        Price: ₹{{ p.price }}<br>
+        Description: {{ p.description }}<br>
+        <div class="product-actions">
+            <a href="{{ url_for('edit_product', pid=p.id) }}">Edit</a>
+            <form method="POST" action="{{ url_for('delete_product', pid=p.id) }}">
+                <button type="submit" onclick="return confirm('Are you sure?')">Delete</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+<p style="margin-top:20px;"><a href="/admin/dashboard">Back to Dashboard</a> | <a href="/admin/logout">Logout</a></p>
+</div>
+</body>
+</html>

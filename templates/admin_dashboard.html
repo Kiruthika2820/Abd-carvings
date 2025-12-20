@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard</title>
+<style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
+    body { display: flex; min-height: 100vh; background: #f0f2f5; }
+
+    /* Sidebar */
+    .sidebar {
+        width: 220px;
+        background: #2c3e50;
+        color: #ecf0f1;
+        display: flex;
+        flex-direction: column;
+        padding-top: 20px;
+        position: fixed;
+        height: 100%;
+    }
+    .sidebar h2 { text-align: center; margin-bottom: 30px; font-size: 22px; }
+    .sidebar a {
+        padding: 15px 20px;
+        color: #ecf0f1;
+        text-decoration: none;
+        display: block;
+        transition: 0.3s;
+    }
+    .sidebar a:hover { background: #34495e; }
+
+    /* Main content */
+    .main {
+        margin-left: 220px;
+        padding: 30px;
+        width: 100%;
+    }
+    .main h1 { margin-bottom: 20px; color: #333; }
+
+    /* Orders table */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #fff;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    th, td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+    th { background: #3498db; color: #fff; }
+    tr:hover { background: #f5f5f5; }
+
+    /* Responsive */
+    @media(max-width: 768px) {
+        body { flex-direction: column; }
+        .sidebar { width: 100%; height: auto; position: relative; }
+        .main { margin-left: 0; padding: 20px; }
+    }
+</style>
+</head>
+<body>
+
+<div class="sidebar">
+    <h2>Admin Panel</h2>
+    <a href="/admin/dashboard">Dashboard</a>
+    <a href="/admin/orders">Orders</a>
+    <a href="/admin/products">Products</a>
+    <a href="/admin/logout">Logout</a>
+</div>
+
+<div class="main">
+    <h1>Orders</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Payment</th>
+                <th>Contact</th>
+                <th>Address</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for o in orders %}
+            <tr>
+                <td>{{ o['name'] if 'name' in o else 'N/A' }}</td>
+                <td>{{ o['product']['name'] if 'product' in o and 'name' in o['product'] else 'N/A' }}</td>
+                <td>₹{{ o['product']['price'] if 'product' in o and 'price' in o['product'] else '0' }}</td>
+                <td>{{ o['payment'] if 'payment' in o else 'N/A' }}</td>
+                <td>{{ o['contact'] if 'contact' in o else 'N/A' }}</td>
+                <td>{{ o['address'] if 'address' in o else 'N/A' }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

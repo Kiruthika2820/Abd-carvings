@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>All Reviews</title>
+<link rel="stylesheet" href="style.css">
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: #f2f2f2;
+    padding: 20px;
+}
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: black;
+    color: white;
+    padding: 10px 20px;
+}
+.navbar .logo img {
+    width: 40px;
+    vertical-align: middle;
+}
+.nav-buttons button {
+    margin-left: 10px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+h2.section-title {
+    text-align: center;
+    margin-top: 30px;
+}
+.reviews-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 20px;
+}
+.review-card {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    width: 250px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+.review-card img {
+    width: 100%;
+    border-radius: 6px;
+}
+.review-card h4 {
+    margin: 10px 0 5px 0;
+}
+.review-card p {
+    margin: 5px 0;
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="logo">
+    <img src="/static/images/f11.jpg" alt="logo">
+    <span>AbdCarvings</span>
+  </div>
+  <div class="nav-buttons">
+    <a href="/"><button>Home</button></a>
+    <a href="review.html"><button class="nav-btn">Submit Review</button></a>
+  </div>
+</nav>
+
+<h2 class="section-title">Customer Reviews</h2>
+
+<div id="reviews-container" class="reviews-grid">
+    <!-- Reviews will be dynamically loaded here -->
+</div>
+
+<script src="review.js"></script>
+<script>
+async function loadReviews(){
+    try {
+        const res = await fetch("/reviews"); // Flask backend API returning JSON
+        const reviews = await res.json();
+        const container = document.getElementById("reviews-container");
+        container.innerHTML = "";
+
+        if(reviews.length === 0){
+            container.innerHTML = "<p>No reviews yet 😢</p>";
+            return;
+        }
+
+        reviews.forEach(r => {
+            const div = document.createElement("div");
+            div.className = "review-card";
+            div.innerHTML = `
+                ${r.image ? `<img src="${r.image}" alt="Review Image">` : ''}
+                <h4>${r.customer_name}</h4>
+                <p>Rating: ${r.rating} ⭐</p>
+                <p>${r.comment}</p>
+                <p><strong>Product:</strong> ${r.product_name || 'N/A'}</p>
+            `;
+            container.appendChild(div);
+        });
+    } catch(e){
+        console.error("Failed to load reviews", e);
+    }
+}
+
+window.addEventListener("DOMContentLoaded", loadReviews);
+</script>
+</body>
+</html>
+

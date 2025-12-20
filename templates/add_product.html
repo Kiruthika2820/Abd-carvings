@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Add Product</title>
+</head>
+<body>
+<h1>Add New Product</h1>
+<form method="POST">
+    Name:<br>
+    <input type="text" name="name" required><br>
+    Price:<br>
+    <input type="number" name="price" step="0.01" required><br>
+    Description:<br>
+    <textarea name="description" required></textarea><br>
+    Image URL:<br>
+    <input type="text" name="image"><br><br>
+    <button type="submit">Add Product</button>
+</form>
+<p><a href="/admin/products">Back to Products</a></p>
+</body>
+</html>

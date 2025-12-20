@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Payment</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#f5f5f5;
+    margin:0;
+}
+
+/* Main box */
+.box{
+    max-width:460px;
+    margin:40px auto;
+    background:#fff;
+    padding:28px;
+    border-radius:12px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.12);
+}
+
+h2{
+    margin-top:0;
+    margin-bottom:20px;
+    text-align:center;
+    color:#333;
+}
+
+/* Payment options */
+.option{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    font-size:16px;
+    font-weight:600;
+    margin:12px 0;
+    cursor:pointer;
+}
+
+.option input{
+    transform:scale(1.2);
+}
+
+/* Detail boxes */
+.payment-box{
+    display:none;
+    margin-top:12px;
+    padding:15px;
+    border:1px solid #ddd;
+    border-radius:8px;
+    background:#fafafa;
+}
+
+.payment-box label{
+    display:block;
+    margin:8px 0 4px;
+    font-size:14px;
+    font-weight:600;
+}
+
+.payment-box input{
+    width:100%;
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:6px;
+    font-size:14px;
+}
+
+/* Button */
+button{
+    width:100%;
+    margin-top:22px;
+    padding:14px;
+    font-size:16px;
+    background:#198754;
+    color:#fff;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#157347;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+    <h2>Payment Method</h2>
+
+    <form method="POST" action="{{ url_for('verify_payment') }}">
+
+        <!-- OPTIONS -->
+
+        <label class="option">
+            <input type="radio" name="payment_method" value="UPI">
+            UPI
+        </label>
+
+        <label class="option">
+            <input type="radio" name="payment_method" value="Credit Card">
+            Credit Card
+        </label>
+
+        <label class="option">
+            <input type="radio" name="payment_method" value="Debit Card">
+            Debit Card
+        </label>
+
+        <!-- UPI DETAILS -->
+        <div id="upiBox" class="payment-box">
+            <label>UPI ID</label>
+            <input type="text" name="upi_id" placeholder="example@upi">
+        </div>
+
+        <!-- CARD DETAILS -->
+        <div id="cardBox" class="payment-box">
+            <label>Card Number</label>
+            <input type="text" name="card_number" placeholder="XXXX XXXX XXXX XXXX">
+
+            <label>Expiry Date</label>
+            <input type="text" name="expiry_date" placeholder="MM/YY">
+
+            <label>CVV</label>
+            <input type="password" name="cvv" placeholder="***">
+        </div>
+
+        <button type="submit">Verify</button>
+    </form>
+</div>
+
+<script>
+const radios = document.querySelectorAll("input[name='payment_method']");
+const upiBox = document.getElementById("upiBox");
+const cardBox = document.getElementById("cardBox");
+
+radios.forEach(radio => {
+    radio.addEventListener("change", () => {
+        upiBox.style.display = "none";
+        cardBox.style.display = "none";
+
+        if (radio.value === "UPI") {
+            upiBox.style.display = "block";
+        }
+        if (radio.value === "Credit Card" || radio.value === "Debit Card") {
+            cardBox.style.display = "block";
+        }
+    });
+});
+</script>
+
+</body>
+</html>

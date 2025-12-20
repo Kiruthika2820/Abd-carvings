@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Confirm Order</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#f5f5f5;
+    margin:0;
+}
+
+/* Main box */
+.container{
+    max-width:950px;
+    margin:30px auto;
+    background:#fff;
+    padding:25px;
+    border-radius:12px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.1);
+}
+
+h2{
+    text-align:center;
+    margin-top:0;
+    color:#333;
+}
+
+h3{
+    margin-bottom:10px;
+    color:#444;
+}
+
+/* Info sections */
+.info-box{
+    background:#f8f9fa;
+    padding:15px;
+    border-radius:8px;
+    margin-bottom:20px;
+    font-size:14px;
+}
+
+hr{
+    border:none;
+    border-top:1px solid #ddd;
+    margin:20px 0;
+}
+
+/* Table */
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:15px;
+}
+
+th, td{
+    padding:12px;
+    border-bottom:1px solid #ddd;
+    text-align:center;
+    font-size:14px;
+}
+
+th{
+    background:#0d6efd;
+    color:#fff;
+}
+
+.product-img{
+    width:60px;
+    height:60px;
+    object-fit:cover;
+    border-radius:6px;
+}
+
+/* Total */
+.total{
+    text-align:right;
+    font-size:20px;
+    font-weight:bold;
+    margin-top:15px;
+}
+
+/* Button */
+button{
+    width:100%;
+    margin-top:25px;
+    padding:16px;
+    font-size:18px;
+    background:#198754;
+    color:#fff;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#157347;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+    <h2>Confirm Your Order</h2>
+
+    <!-- DELIVERY -->
+    <div class="info-box">
+        <h3>Delivery Address</h3>
+        <p>
+            <b>{{ address.name }}</b><br>
+            {{ address.building }}, {{ address.street }}<br>
+            {{ address.city }}, {{ address.state }} - {{ address.pincode }}<br>
+            <b>Phone:</b> {{ address.phone }}
+        </p>
+    </div>
+
+    <!-- PAYMENT -->
+    <div class="info-box">
+        <h3>Payment Method</h3>
+        <p>{{ payment_method }}</p>
+    </div>
+
+    <!-- ITEMS -->
+    <h3>Items</h3>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Qty</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in cart_items %}
+            <tr>
+                <td>
+                    <img src="{{ item.image }}" alt="{{ item.name }}" class="product-img">
+                </td>
+                <td>{{ item.name }}</td>
+                <td>₹{{ "%.2f"|format(item.price) }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>₹{{ "%.2f"|format(item.subtotal) }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="total">
+        Total: ₹{{ "%.2f"|format(total) }}
+    </div>
+
+    <!-- PLACE ORDER -->
+    <form method="POST" action="{{ url_for('order_success') }}">
+        <button type="submit">Place Order</button>
+    </form>
+
+</div>
+</body>
+</html>

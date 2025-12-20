@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Admin Orders</title>
+<style>
+body { font-family: Arial, sans-serif; background: #f5f5f5; margin: 0; padding: 0; }
+.container { max-width: 900px; margin: 30px auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+h1 { text-align: center; margin-bottom: 20px; }
+.order { border-bottom: 1px solid #ddd; padding: 15px 0; }
+.order:last-child { border-bottom: none; }
+</style>
+</head>
+<body>
+<div class="container">
+<h1>All Orders</h1>
+
+{% if orders %}
+    <table style="width:100%; border-collapse: collapse;">
+        <thead>
+            <tr style="background:#3498db; color:white;">
+                <th>Name</th>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Payment</th>
+                <th>Contact</th>
+                <th>Address</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for o in orders %}
+            <tr>
+                <td>{{ o['name'] if 'name' in o else 'N/A' }}</td>
+                <td>{{ o['product']['name'] if 'product' in o and 'name' in o['product'] else 'N/A' }}</td>
+                <td>₹{{ o['product']['price'] if 'product' in o and 'price' in o['product'] else '0' }}</td>
+                <td>{{ o['payment'] if 'payment' in o else 'N/A' }}</td>
+                <td>{{ o['contact'] if 'contact' in o else 'N/A' }}</td>
+                <td>{{ o['address'] if 'address' in o else 'N/A' }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>No orders yet.</p>
+{% endif %}
+
+<p style="margin-top:20px;"><a href="/admin/dashboard">Back to Dashboard</a> | <a href="/admin/logout">Logout</a></p>
+</div>
+</body>
+</html>

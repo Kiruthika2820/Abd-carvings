@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Delivery Address</title>
+
+<style>
+/* ===== RESET ===== */
+*{
+    box-sizing:border-box;
+}
+
+/* ===== BODY ===== */
+body{
+    font-family: Arial, sans-serif;
+    background:#f5f5f5;
+    margin:0;
+    padding:0;
+}
+
+/* ===== CONTAINER ===== */
+.container{
+    max-width:600px;
+    margin:40px auto;
+    background:#ffffff;
+    padding:30px 35px;
+    border-radius:14px;
+    box-shadow:0 6px 18px rgba(0,0,0,0.12);
+}
+
+/* ===== TITLE ===== */
+h2{
+    margin-top:0;
+    margin-bottom:25px;
+    text-align:center;
+    color:#333;
+    font-size:24px;
+}
+
+/* ===== FORM ===== */
+form{
+    width:100%;
+}
+
+/* ===== LABEL ===== */
+label{
+    display:block;
+    margin:14px 0 6px;
+    font-weight:600;
+    font-size:14px;
+    color:#444;
+}
+
+/* ===== INPUTS ===== */
+input, textarea{
+    width:100%;
+    padding:11px 12px;
+    font-size:14px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    outline:none;
+    transition:0.2s;
+}
+
+input:focus,
+textarea:focus{
+    border-color:#0d6efd;
+    box-shadow:0 0 0 2px rgba(13,110,253,0.15);
+}
+
+/* ===== TEXTAREA ===== */
+textarea{
+    resize:none;
+}
+
+/* ===== BUTTON ===== */
+button{
+    width:100%;
+    margin-top:28px;
+    padding:15px;
+    font-size:17px;
+    font-weight:600;
+    background:#0d6efd;
+    color:#fff;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    background:#0b5ed7;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>Delivery Address</h2>
+
+    <!-- ADDRESS ONLY FORM -->
+    <form method="POST" action="{{ url_for('delivery_address') }}">
+
+        <label>Full Name</label>
+        <input type="text" name="name" placeholder="Enter your full name" required>
+
+        <label>Phone Number</label>
+        <input type="text" name="phone" placeholder="Enter mobile number" required>
+
+        <label>Building / House No</label>
+        <input type="text" name="building" placeholder="House / Flat no" required>
+
+        <label>Street</label>
+        <input type="text" name="street" placeholder="Street name" required>
+
+        <label>City</label>
+        <input type="text" name="city" placeholder="City" required>
+
+        <label>State</label>
+        <input type="text" name="state" placeholder="State" required>
+
+        <label>Pincode</label>
+        <input type="text" name="pincode" placeholder="Pincode" required>
+
+        <button type="submit">Continue</button>
+    </form>
+</div>
+
+</body>
+</html>
