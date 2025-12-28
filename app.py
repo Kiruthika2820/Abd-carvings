@@ -9,8 +9,8 @@ PRODUCT_FILE = "products.json"
 ORDER_FILE = "orders.json"
 REVIEW_FILE = "reviews.json"
 
-ADMIN_USERNAME = "admin"
-ADMIN_PASSWORD = "admin123"
+ADMIN_USERNAME = "Fasith"
+ADMIN_PASSWORD = "fasithsara5454sara5454fasith"
 
 # ================= HELPERS =================
 def load_json(file, default):
@@ -328,6 +328,59 @@ def write_review(product_id):
     reviews[str(product_id)] = product_reviews
     save_reviews(reviews)
     return redirect(request.referrer or f"/product/{product_id}")
+def admin_required():
+    if not session.get("is_admin"):
+        return redirect("/admin/login")
+
+@app.route("/admin/login", methods=["GET", "POST"])
+def admin_login():
+    if request.method == "POST":
+        email = request.form["username"]
+        password = request.form["password"]
+
+        if email == ADMIN_USERNAME and password == ADMIN_PASSWORD:
+            session["admin"] = True
+            return redirect("/admin/dashboard")
+        else:
+            return "Invalid admin credentials"
+
+    return render_template("admin_login.html")
+@app.route("/admin/dashboard")
+def admin_dashboard():
+    if not session.get("admin"):
+        return redirect("/admin/login")
+
+    return render_template("admin_dashboard.html")
+@app.route("/admin/orders")
+def admin_orders():
+    if not session.get("is_admin"):
+        return redirect("/admin/login")
+
+    return render_template("admin_orders.html")
+@app.route("/admin/reviews")
+def admin_reviews():
+    if not session.get("is_admin"):
+        return redirect("/admin/login")
+
+    return render_template("admin_reviews.html")
+@app.route("/admin/products")
+def admin_products():
+    if not session.get("admin"):
+        return redirect("/admin/login")
+
+    return render_template("admin_products.html")
+@app.route("/admin/edit-product/<id>")
+def edit_product(id):
+    if not session.get("is_admin"):
+        return redirect("/admin/login")
+@app.route("/admin/delete-product/<id>")
+def delete_product(id):
+    if not session.get("is_admin"):
+        return redirect("/admin/login")
+@app.route("/admin/logout")
+def admin_logout():
+    session.pop("admin", None)
+    return redirect("/admin/login")
 
 # ================= RUN =================
 if __name__ == "__main__":
