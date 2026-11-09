@@ -429,6 +429,14 @@ def service_worker():
     resp.headers["Service-Worker-Allowed"] = "/"
     resp.headers["Cache-Control"] = "no-cache"
     return resp
+
+@app.route("/favicon.ico")
+@app.route("/apple-touch-icon.png")
+@app.route("/apple-touch-icon-precomposed.png")
+def site_icon():
+    resp = send_from_directory("static", "icon-192.png", mimetype="image/png")
+    resp.headers["Cache-Control"] = "public, max-age=86400"
+    return resp
     
 # ================= RUN =================
 if __name__ == "__main__":
