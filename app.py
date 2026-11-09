@@ -223,12 +223,6 @@ def verify_payment():
         "method": payment_method
     }
 
-    # Generate OTP (demo)
-    otp = random.randint(100000, 999999)
-    session["payment_otp"] = str(otp)
-
-    print("DEBUG OTP:", otp)  # terminal-la OTP show aagum
-
     return render_template("payment_verify.html")
 
 # ================= CONFIRM ORDER =================
