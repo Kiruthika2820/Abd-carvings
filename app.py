@@ -362,18 +362,55 @@ def admin_orders():
 def admin_products():
     if not admin_required():
         return redirect("/admin/login")
-    return render_template("admin_products.html")
+    return render_template("admin_products.html", products=load_products())
 
-@app.route("/admin/edit-product/<id>")
-def edit_product(id):
+@app.route("/admin/add-product", methods=["GET", "POST"])
+def add_product():
     if not admin_required():
         return redirect("/admin/login")
-    return redirect("/admin/products")
 
-@app.route("/admin/delete-product/<id>")
-def delete_product(id):
+    if request.method == "POST":
+        products = load_products()
+        new_id = max([int(p["id"]) for p in products], default=0) + 1
+        products.append({
+            "id": new_id,
+            "name": request.form["name"],
+            "price": float(request.form["price"]),
+            "description": request.form["description"],
+            "image": request.form.get("image", "")
+        })
+        save_json(PRODUCT_FILE, products)
+        return redirect("/admin/products")
+
+    return render_template("add_product.html")
+
+@app.route("/admin/edit-product/<int:pid>", methods=["GET", "POST"])
+def edit_product(pid):
     if not admin_required():
         return redirect("/admin/login")
+
+    products = load_products()
+    product = next((p for p in products if int(p["id"]) == pid), None)
+    if product is None:
+        return redirect("/admin/products")
+
+    if request.method == "POST":
+        product["name"] = request.form["name"]
+        product["price"] = float(request.form["price"])
+        product["description"] = request.form["description"]
+        product["image"] = request.form.get("image", "")
+        save_json(PRODUCT_FILE, products)
+        return redirect("/admin/products")
+
+    return render_template("edit_product.html", product=product)
+
+@app.route("/admin/delete-product/<int:pid>", methods=["POST"])
+def delete_product(pid):
+    if not admin_required():
+        return redirect("/admin/login")
+
+    products = [p for p in load_products() if int(p["id"]) != pid]
+    save_json(PRODUCT_FILE, products)
     return redirect("/admin/products")
 
 @app.route("/admin/logout")
